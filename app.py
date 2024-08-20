@@ -1,11 +1,20 @@
 import gradio as gr
 import random
 import os
+import json
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from collections import defaultdict
+
+# File paths for storing data
+DATA_DIR = "data"
+RATINGS_FILE = os.path.join(DATA_DIR, "ratings.json")
+PAIRWISE_FILE = os.path.join(DATA_DIR, "pairwise_results.json")
+
+# Ensure data directory exists
+os.makedirs(DATA_DIR, exist_ok=True)
 
 # Initialize Elo ratings and other statistics
 modalities = {
@@ -15,27 +24,48 @@ modalities = {
     # Add more modalities as needed
 }
 
-pairwise_results = {
-    modality: defaultdict(lambda: defaultdict(lambda: [0, 0])) for modality in modalities
-}
-
 image_folders = {
-    "Fruits": "images/fruits",
+    "Fruits": "images/Actresses",
     "Actresses": "images/Actresses",
     "Cars": "images/Cars",
     # Add paths for other modalities
 }
+
+def load_data():
+    global modalities, pairwise_results
+    if os.path.exists(RATINGS_FILE):
+        with open(RATINGS_FILE, 'r') as f:
+            modalities = json.load(f)
+    
+    if os.path.exists(PAIRWISE_FILE):
+        with open(PAIRWISE_FILE, 'r') as f:
+            pairwise_results = json.load(f)
+    else:
+        pairwise_results = {
+            modality: defaultdict(lambda: defaultdict(lambda: [0, 0])) for modality in modalities
+        }
+
+def save_data():
+    with open(RATINGS_FILE, 'w') as f:
+        json.dump(modalities, f)
+    
+    with open(PAIRWISE_FILE, 'w') as f:
+        json.dump(pairwise_results, f)
+
+# Load existing data or initialize if not present
+load_data()
 
 # Load images and initialize ratings for each modality
 for modality, folder in image_folders.items():
     for filename in os.listdir(folder):
         if filename.endswith((".jpg", ".png", ".jpeg")):
             item_name = os.path.splitext(filename)[0]
-            modalities[modality][item_name] = {
-                "rating": 1400,  # Initial Elo rating
-                "image": os.path.join(folder, filename),
-                "plays": 0
-            }
+            if item_name not in modalities[modality]:
+                modalities[modality][item_name] = {
+                    "rating": 1400,  # Initial Elo rating
+                    "image": os.path.join(folder, filename),
+                    "plays": 0
+                }
 
 current_modality = list(modalities.keys())[0]  # Default to the first modality
 current_items = random.sample(list(modalities[current_modality].keys()), 2)
@@ -62,6 +92,7 @@ def update_ratings(winner, loser):
     pairwise_results[current_modality][winner][loser][0] += 1
     pairwise_results[current_modality][winner][loser][1] += 1
     pairwise_results[current_modality][loser][winner][1] += 1
+    save_data()
 
 def get_random_items():
     """Get two random items from the current modality"""
