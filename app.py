@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from collections import defaultdict
+import plotly.colors as pc
 
 # File paths for storing data
 DATA_DIR = "data"
@@ -145,10 +146,15 @@ def get_ratings_table():
     df.index += 1  # Start index from 1 instead of 0
     return df
 
+
 def get_pairwise_heatmap():
     """Generate an interactive heatmap of pairwise win rates"""
     items = modalities[current_modality]
-    item_names = sorted(items.keys())
+    
+    # Sort items by rating
+    sorted_items = sorted(items.items(), key=lambda x: x[1]['rating'], reverse=True)
+    item_names = [item[0] for item in sorted_items]
+    
     n = len(item_names)
     win_rates = np.zeros((n, n))
     
@@ -157,13 +163,24 @@ def get_pairwise_heatmap():
             if i != j:
                 wins, total = pairwise_results[current_modality][item1][item2]
                 win_rates[i, j] = wins / total if total > 0 else 0.5
+            else:
+                win_rates[i, j] = 0.5  # Set diagonal to 0.5 (neutral)
+    
+    # Create a custom colorscale from red to white to green
+    colorscale = [
+        [0, "rgb(255,0,0)"],
+        [0.5, "rgb(255,255,255)"],
+        [1, "rgb(0,255,0)"]
+    ]
     
     fig = go.Figure(data=go.Heatmap(
         z=win_rates,
         x=item_names,
-        y=item_names,
+        y=item_names,  # Reverse the order for y-axis
         hoverongaps=False,
-        colorscale='YlGnBu',
+        colorscale=colorscale,
+        zmin=0,
+        zmax=1,
         text=np.round(win_rates, 2),
         texttemplate="%{text}",
         textfont={"size": 10},
@@ -177,7 +194,12 @@ def get_pairwise_heatmap():
         height=800,
     )
     
+    # Add ratings to the y-axis labels (in reverse order)
+    y_labels = [f"{item}: {items[item]['rating']:.0f}" for item in item_names[::-1]]
+    fig.update_yaxes(ticktext=y_labels, tickvals=item_names[::-1])
+    
     return fig
+
 
 def change_modality(new_modality):
     global current_modality, current_items

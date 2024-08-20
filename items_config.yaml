@@ -9,8 +9,6 @@ Fruits:
     image: images/fruits/orange.jpg
   - name: کرفس
     image: images/fruits/orange.jpg
-  - name: شلغم
-    image: images/fruits/orange.jpg
 
 Actresses:
   - name: Meryl Streep
