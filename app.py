@@ -2,6 +2,7 @@ import gradio as gr
 import random
 import os
 import json
+import yaml
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
@@ -11,24 +12,21 @@ from collections import defaultdict
 DATA_DIR = "data"
 RATINGS_FILE = os.path.join(DATA_DIR, "ratings.json")
 PAIRWISE_FILE = os.path.join(DATA_DIR, "pairwise_results.json")
+ITEMS_CONFIG_FILE = "items_config.yaml"
 
 # Ensure data directory exists
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Initialize Elo ratings and other statistics
-modalities = {
-    "Fruits": {},
-    "Actresses": {},
-    "Cars": {},
-    # Add more modalities as needed
-}
+def load_items_config():
+    with open(ITEMS_CONFIG_FILE, 'r') as f:
+        return yaml.safe_load(f)
 
-image_folders = {
-    "Fruits": "images/fruits",
-    "Actresses": "images/Actresses",
-    "Cars": "images/Cars",
-    # Add paths for other modalities
-}
+# Load items configuration
+items_config = load_items_config()
+
+# Initialize Elo ratings and other statistics
+modalities = {modality: {} for modality in items_config.keys()}
+pairwise_results = {}
 
 def load_data():
     global modalities, pairwise_results
@@ -39,10 +37,11 @@ def load_data():
     if os.path.exists(PAIRWISE_FILE):
         with open(PAIRWISE_FILE, 'r') as f:
             pairwise_results = json.load(f)
-    else:
-        pairwise_results = {
-            modality: defaultdict(lambda: defaultdict(lambda: [0, 0])) for modality in modalities
-        }
+    
+    # Initialize pairwise_results for modalities if not present
+    for modality in modalities:
+        if modality not in pairwise_results:
+            pairwise_results[modality] = {}
 
 def save_data():
     with open(RATINGS_FILE, 'w') as f:
@@ -51,20 +50,40 @@ def save_data():
     with open(PAIRWISE_FILE, 'w') as f:
         json.dump(pairwise_results, f)
 
-# Load existing data or initialize if not present
+# Load existing data
 load_data()
 
-# Load images and initialize ratings for each modality
-for modality, folder in image_folders.items():
-    for filename in os.listdir(folder):
-        if filename.endswith((".jpg", ".png", ".jpeg")):
-            item_name = os.path.splitext(filename)[0]
+def initialize_new_items():
+    for modality, items in items_config.items():
+        if modality not in modalities:
+            modalities[modality] = {}
+        if modality not in pairwise_results:
+            pairwise_results[modality] = {}
+        
+        for item in items:
+            item_name = item['name']
             if item_name not in modalities[modality]:
                 modalities[modality][item_name] = {
                     "rating": 1400,  # Initial Elo rating
-                    "image": os.path.join(folder, filename),
+                    "image": item['image'],
                     "plays": 0
                 }
+            
+            # Initialize pairwise results for the new item
+            if item_name not in pairwise_results[modality]:
+                pairwise_results[modality][item_name] = {}
+            
+            for other_item in items:
+                other_item_name = other_item['name']
+                if other_item_name != item_name:
+                    if other_item_name not in pairwise_results[modality][item_name]:
+                        pairwise_results[modality][item_name][other_item_name] = [0, 0]
+
+# Initialize new items
+initialize_new_items()
+
+# Save updated data
+save_data()
 
 current_modality = list(modalities.keys())[0]  # Default to the first modality
 current_items = random.sample(list(modalities[current_modality].keys()), 2)

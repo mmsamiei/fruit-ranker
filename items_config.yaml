@@ -1,0 +1,37 @@
+Fruits:
+  - name: Apple
+    image: images/fruits/apple.jpg
+  - name: Banana
+    image: images/fruits/banana.jpg
+  - name: Orange
+    image: images/fruits/orange.jpg
+  - name: موز
+    image: images/fruits/orange.jpg
+  - name: کرفس
+    image: images/fruits/orange.jpg
+  - name: شلغم
+    image: images/fruits/orange.jpg
+
+Actresses:
+  - name: Meryl Streep
+    image: images/fruits/apple.jpg
+  - name: Viola Davis
+    image: images/fruits/apple.jpg
+  - name: Cate Blanchett
+    image: images/fruits/apple.jpg
+
+Cars:
+  - name: Tesla Model S
+    image: images/fruits/apple.jpg
+  - name: Ford Mustang
+    image: images/fruits/apple.jpg
+  - name: Toyota Camry
+    image: images/fruits/apple.jpg
+
+فوتبال:
+  - name: رئال مادرید
+    image: images/fruits/apple.jpg
+  - name: دورتموند
+    image: images/fruits/apple.jpg
+  - name: بارسلونا
+    image: images/fruits/apple.jpg
