@@ -4,8 +4,7 @@ import os
 import json
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 from collections import defaultdict
 
 # File paths for storing data
@@ -25,7 +24,7 @@ modalities = {
 }
 
 image_folders = {
-    "Fruits": "images/Actresses",
+    "Fruits": "images/fruits",
     "Actresses": "images/Actresses",
     "Cars": "images/Cars",
     # Add paths for other modalities
@@ -128,7 +127,7 @@ def get_ratings_table():
     return df
 
 def get_pairwise_heatmap():
-    """Generate a heatmap of pairwise win rates"""
+    """Generate an interactive heatmap of pairwise win rates"""
     items = modalities[current_modality]
     item_names = sorted(items.keys())
     n = len(item_names)
@@ -140,17 +139,26 @@ def get_pairwise_heatmap():
                 wins, total = pairwise_results[current_modality][item1][item2]
                 win_rates[i, j] = wins / total if total > 0 else 0.5
     
-    plt.figure(figsize=(12, 10))
-    sns.heatmap(win_rates, annot=True, cmap="YlGnBu", xticklabels=item_names, yticklabels=item_names)
-    plt.title(f"Pairwise Win Rates - {current_modality}")
-    plt.xlabel("Opponent")
-    plt.ylabel("Item")
+    fig = go.Figure(data=go.Heatmap(
+        z=win_rates,
+        x=item_names,
+        y=item_names,
+        hoverongaps=False,
+        colorscale='YlGnBu',
+        text=np.round(win_rates, 2),
+        texttemplate="%{text}",
+        textfont={"size": 10},
+    ))
     
-    # Save the plot to a file
-    plt.savefig("pairwise_heatmap.png")
-    plt.close()
+    fig.update_layout(
+        title=f"Pairwise Win Rates - {current_modality}",
+        xaxis_title="Opponent",
+        yaxis_title="Item",
+        width=800,
+        height=800,
+    )
     
-    return "pairwise_heatmap.png"
+    return fig
 
 def change_modality(new_modality):
     global current_modality, current_items
@@ -193,7 +201,7 @@ with gr.Blocks() as demo:
                     ratings_table = gr.Dataframe(value=get_ratings_table())
                 
                 with gr.TabItem("Pairwise Results"):
-                    pairwise_heatmap = gr.Image(value=get_pairwise_heatmap())
+                    pairwise_heatmap = gr.Plot()
     
     modality_dropdown.change(
         change_modality,
