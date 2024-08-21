@@ -1,39 +1,78 @@
 Fruits:
-  - name: Apple
-    image: images/fruits/apple.jpg
-  - name: Banana
-    image: images/fruits/banana.jpg
-  - name: Orange
-    image: images/fruits/orange.jpg
-  - name: موز
-    image: images/fruits/orange.jpg
+  - name: گوچه سبز
+    image: images/Fruits/goje-sabz.jpg
   - name: توت فرنگی
-    image: images/fruits/orange.jpg
-  - name: آلو
-    image: images/fruits/orange.jpg
+    image: images/Fruits/tot-farangi.jpg
+  - name: گیلاس
+    image: images/Fruits/gilas.jpg
+  - name: آلبالو  
+    image: images/Fruits/albaloo.jpg
+  - name: زردآلو
+    image: images/Fruits/zardaloo.jpg
   - name: هلو
-    image: images/fruits/orange.jpg
+    image: images/Fruits/holoo.jpg
+  - name: شلیل
+    image: images/Fruits/shalil.jpg
+  - name: آلو
+    image: images/Fruits/aloo.jpg
+  - name: گلابی
+    image: images/Fruits/golabi.jpg
+  - name: سیب
+    image: images/Fruits/sib.jpg
+  - name: انار
+    image: images/Fruits/anar.jpg
+  - name: خرمالو
+    image: images/Fruits/khormaloo.jpg
+  - name: هندوانه
+    image: images/Fruits/hendovane.jpg
+  - name: طالبی
+    image: images/Fruits/talabi.jpg
+  - name: خربزه
+    image: images/Fruits/kharboze.jpg
+  - name: پرتقال
+    image: images/Fruits/porteghal.jpg
+  - name: نارنگی
+    image: images/Fruits/narenji.jpg
+  - name: لیمو
+    image: images/Fruits/limoo.jpg
+  - name: موز
+    image: images/Fruits/moz.jpg
+  - name: انگور
+    image: images/Fruits/angor.jpg
+  - name: انجیر
+    image: images/Fruits/anjir.jpg
+  - name: آناناس
+    image: images/Fruits/ananas.jpg
+  - name: کیوی
+    image: images/Fruits/kiwi.jpg
 
-Actresses:
-  - name: Meryl Streep
-    image: images/fruits/apple.jpg
-  - name: Viola Davis
-    image: images/fruits/apple.jpg
-  - name: Cate Blanchett
-    image: images/fruits/apple.jpg
 
-Cars:
-  - name: Tesla Model S
-    image: images/fruits/apple.jpg
-  - name: Ford Mustang
-    image: images/fruits/apple.jpg
-  - name: Toyota Camry
-    image: images/fruits/apple.jpg
-
-فوتبال:
+Football:
   - name: رئال مادرید
-    image: images/fruits/apple.jpg
-  - name: دورتموند
-    image: images/fruits/apple.jpg
+    image: images/Football/real-madrid.jpg
   - name: بارسلونا
-    image: images/fruits/apple.jpg
+    image: images/Football/barcelona.jpg
+  - name: اتلتیکو مادرید
+    image: images/Football/atletico-madrid.jpg
+  - name: منچسترسیتی
+    image: images/Football/manchester-city.jpg
+  - name: منچستریونایتد
+    image: images/Football/manchester-united.jpg
+  - name: لیورپول
+    image: images/Football/liverpool.jpg
+  - name: آرسنال
+    image: images/Football/arsenal.jpg
+  - name: چلسی
+    image: images/Football/chelsea.jpg
+  - name: بایرن مونیخ
+    image: images/Football/bayern-munich.jpg
+  - name: دورتموند
+    image: images/Football/dortmund.jpg
+  - name: پاریسن ژرمن
+    image: images/Football/paris-saint-germain.jpg
+  - name: یوونتوس
+    image: images/Football/juventus.jpg
+  - name: اینتر میلان
+    image: images/Football/inter-milan.jpg
+  - name: میلان
+    image: images/Football/milan.jpg
