@@ -210,7 +210,7 @@ def get_pairwise_heatmap():
     ))
     
     fig.update_layout(
-        title=f"Pairwise Win Rates - {current_modality}",
+        # title=f"Pairwise Win Rates - {current_modality}",
         xaxis_title="Opponent",
         yaxis_title="Item",
         width=800,
@@ -218,10 +218,11 @@ def get_pairwise_heatmap():
     )
     
     # Add ratings to the y-axis labels (in reverse order)
-    y_labels = [f"{item}: {items[item]['rating']:.0f}" for item in item_names[::-1]]
+    y_labels = [item for item in item_names[::-1]]
     fig.update_yaxes(ticktext=y_labels, tickvals=item_names[::-1])
     fig.update_yaxes(autorange="reversed")
-
+    fig.update_layout(xaxis = dict(side ="top"))
+    fig.update_xaxes(tickangle=90)
     return fig
 
 
