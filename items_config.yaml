@@ -7,11 +7,12 @@ Fruits:
     image: images/fruits/orange.jpg
   - name: موز
     image: images/fruits/orange.jpg
-  - name: کرفس
+  - name: توت فرنگی
     image: images/fruits/orange.jpg
-  - name: گردو
+  - name: آلو
     image: images/fruits/orange.jpg
-
+  - name: هلو
+    image: images/fruits/orange.jpg
 
 Actresses:
   - name: Meryl Streep

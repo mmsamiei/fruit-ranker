@@ -8,6 +8,7 @@ import numpy as np
 import plotly.graph_objects as go
 from collections import defaultdict
 import plotly.colors as pc
+import plotly.express as px
 
 # File paths for storing data
 DATA_DIR = "data"
@@ -60,6 +61,28 @@ def initialize_new_items():
             modalities[modality] = {}
         if modality not in pairwise_results:
             pairwise_results[modality] = {}
+
+        
+                # Get the set of current item names from items_config
+        current_item_names = set(item['name'] for item in items)
+        
+        # Check for items to remove
+        items_to_remove = set(modalities[modality].keys()) - current_item_names
+        for item_name in items_to_remove:
+            # Remove from modalities
+            del modalities[modality][item_name]
+            
+            # Remove from pairwise_results
+            if item_name in pairwise_results[modality]:
+                del pairwise_results[modality][item_name]
+            
+            # Remove this item from other items' pairwise results
+            for other_item in pairwise_results[modality]:
+                if item_name in pairwise_results[modality][other_item]:
+                    del pairwise_results[modality][other_item][item_name]
+
+
+
         
         for item in items:
             item_name = item['name']
@@ -169,7 +192,7 @@ def get_pairwise_heatmap():
     # Create a custom colorscale from red to white to green
     colorscale = [
         [0, "rgb(255,0,0)"],
-        [0.5, "rgb(255,255,255)"],
+        [0.5, "rgb(255,255,0)"],
         [1, "rgb(0,255,0)"]
     ]
     
@@ -178,7 +201,7 @@ def get_pairwise_heatmap():
         x=item_names,
         y=item_names,  # Reverse the order for y-axis
         hoverongaps=False,
-        colorscale=colorscale,
+        colorscale=px.colors.diverging.RdYlGn,
         zmin=0,
         zmax=1,
         text=np.round(win_rates, 2),
