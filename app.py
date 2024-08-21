@@ -256,8 +256,14 @@ with gr.Blocks() as demo:
                     gr.Markdown("Click on the button of the item you prefer. The Elo ratings will be updated accordingly.")
                     
                     with gr.Row():
-                        img1 = gr.Image(value=modalities[current_modality][current_items[0]]["image"], label="Item 1")
-                        img2 = gr.Image(value=modalities[current_modality][current_items[1]]["image"], label="Item 2")
+                        img1 = gr.Image(value=modalities[current_modality][current_items[0]]["image"], label="Item 1", 
+                                        width=500,  # Set a fixed width
+                                        height=500)  # Set a fixed height
+                        img2 = gr.Image(value=modalities[current_modality][current_items[1]]["image"], label="Item 2", 
+                                        width=500,  # Set a fixed width
+                                        height=500)  # Set a fixed height
+
+
                     
                     with gr.Row():
                         btn1 = gr.Button(current_items[0])
