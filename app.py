@@ -112,7 +112,7 @@ save_data()
 current_modality = list(modalities.keys())[0]  # Default to the first modality
 current_items = random.sample(list(modalities[current_modality].keys()), 2)
 
-def calculate_elo(rating1, rating2, k=32, win=1):
+def calculate_elo(rating1, rating2, k=8, win=1):
     """Calculate new Elo ratings"""
     expected1 = 1 / (1 + 10 ** ((rating2 - rating1) / 400))
     expected2 = 1 / (1 + 10 ** ((rating1 - rating2) / 400))
@@ -290,4 +290,4 @@ with gr.Blocks() as demo:
         outputs=[img1, img2, btn1, btn2, ratings_table, pairwise_heatmap]
     )
 
-demo.launch()
+demo.launch(share=True)

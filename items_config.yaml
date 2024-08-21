@@ -76,3 +76,35 @@ Football:
     image: images/Football/inter-milan.jpg
   - name: میلان
     image: images/Football/milan.jpg
+
+
+
+Animations:
+- name: شرکت هیولاها
+  image: images/Animations/monster.jpg
+- name: در جستجوی نمو
+  image: images/Animations/finding-nemo.jpg
+- name: شگفت‌انگیزان
+  image: images/Animations/incredibles.jpg
+- name: ماشین‌ها
+  image: images/Animations/cars.jpg
+- name: راتاتویی
+  image: images/Animations/ratatouille.jpg
+- name: وال-ئی
+  image: images/Animations/walle.jpg
+- name: بالا
+  image: images/Animations/up.jpg
+- name: داستان اسباب‌بازی‌ها ۱
+  image: images/Animations/toy-story-1.jpg
+- name: داستان اسباب‌بازی‌ها ۲
+  image: images/Animations/toy-story-2.jpeg
+- name: داستان اسباب‌بازی‌ها ۳
+  image: images/Animations/toy-story-3.jpg
+- name: داستان اسباب‌بازی‌ها ۴
+  image: images/Animations/toy-story-4.jpeg
+
+
+
+
+
+
